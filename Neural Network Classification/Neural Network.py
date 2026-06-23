@@ -105,3 +105,32 @@ class NeuralNetwork:
                 delta = (delta @ self.weights[i].T) * relu_derivative(pre_activations[i - 1])
  
         return grad_weights, grad_biases
+
+    def train(self, X_train, y_train, epochs=1000, learning_rate=0.01,
+              verbose=True, print_every=100):
+
+        history = []
+ 
+        for epoch in range(1, epochs + 1):
+            # 1) Forward pass
+            activations, pre_activations = self.forward(X_train)
+ 
+            # 2) Funcao de custo
+            loss = self.compute_loss(activations[-1], y_train)
+            history.append(loss)
+ 
+            # 3) Backpropagation
+            grad_weights, grad_biases = self.backward(
+                activations, pre_activations, y_train
+            )
+ 
+            # 4) Atualizacao dos pesos (gradient descent)
+            for i in range(self.num_layers - 1):
+                self.weights[i] -= learning_rate * grad_weights[i]
+                self.biases[i]  -= learning_rate * grad_biases[i]
+ 
+            if verbose and epoch % print_every == 0:
+                print(f"Epoca {epoch:>5}/{epochs} — Custo: {loss:.4f}")
+ 
+        return history
+ 
