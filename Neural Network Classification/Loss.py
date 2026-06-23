@@ -1,3 +1,5 @@
+import numpy as np
+
 def compute_loss(self, y_pred, y_true):
 
     n = y_true.shape[0]
