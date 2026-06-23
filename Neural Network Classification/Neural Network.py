@@ -1,5 +1,5 @@
 import numpy as np
-from ativacoes 
+from ativacoes import relu, relu_derivative, sigmoid, sigmoid_derivative, softmax
 
 class NeuralNetwork:
 
