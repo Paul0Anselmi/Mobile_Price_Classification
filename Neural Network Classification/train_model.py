@@ -2,8 +2,10 @@ import os
 import numpy as np
 import pandas as pd
 from Neural_Network import NeuralNetwork
+import matplotlib.pyplot as plt
 
 # 1) Carregar os dados
+base_dir = os.path.dirname(os.path.abspath(__file__))
 data_path = os.path.join("..", "Database", "train.csv")
 df = pd.read_csv(data_path)
 
@@ -36,3 +38,19 @@ history = nn.train(
     verbose=True,
     print_every=100
 )
+
+# ------------------------------------------------------------------
+# 5) Grafico da curva de aprendizado
+# ------------------------------------------------------------------
+plt.figure(figsize=(10, 5))
+plt.plot(history, color="royalblue", linewidth=2)
+plt.title("Curva de Aprendizado — Cross-Entropy por Epoca", fontsize=14)
+plt.xlabel("Epoca", fontsize=12)
+plt.ylabel("Custo (Cross-Entropy)", fontsize=12)
+plt.grid(True, linestyle="--", alpha=0.6)
+plt.tight_layout()
+ 
+output_path = os.path.join(base_dir, "curva_aprendizado.png")
+plt.savefig(output_path, dpi=150)
+print(f"\nGrafico salvo em: {output_path}")
+plt.show()
