@@ -8,7 +8,7 @@ def relu_derivete(z):
 
 def sigmoid(z):
     z =np.clip(z,-500,500)
-    return 1.0/(1.0+np.exp(z))
+    return 1.0/(1.0+np.exp(-z))
 
 def softmax(z):
     z_shifted = z - np.max(z, axis=1, keepdims=True)
