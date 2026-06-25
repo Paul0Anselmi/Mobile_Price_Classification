@@ -94,3 +94,31 @@ class NeuralNetwork:
                 print(f"Epoca {epoch:>5}/{epochs} — Custo: {loss:.4f}")
 
         return history
+
+def predict(self, X):
+    """
+    Gera a predicao de classe para cada amostra em X.
+
+    Faz o forward pass e aplica argmax sobre as probabilidades
+    do softmax — retorna a classe com maior probabilidade.
+
+    Parameters
+    ----------
+    X : np.ndarray, shape (n_amostras, n_features)
+        Dados de entrada normalizados.
+
+    Returns
+    -------
+    y_pred : np.ndarray, shape (n_amostras,)
+        Classe prevista para cada amostra (0, 1, 2 ou 3).
+    probabilities : np.ndarray, shape (n_amostras, n_classes)
+        Probabilidades do softmax para cada classe.
+    """
+    activations, _ = self.forward(X)
+    probabilities = activations[-1]
+
+    # argmax retorna o indice da maior probabilidade em cada linha
+    # Ex: [0.05, 0.10, 0.72, 0.13] -> 2 (preco alto)
+    y_pred = np.argmax(probabilities, axis=1)
+
+    return y_pred, probabilities
